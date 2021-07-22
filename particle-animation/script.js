@@ -14,9 +14,19 @@ let mouse = {
     radius:(canvas.width/80)*(canvas.height/80)
 }
 
-window.addEventListener('mousemove', (event)=>{
+window.addEventListener('mousemove', (event) => {
     mouse.x = event.x;
     mouse.y = event.y;
+})
+window.addEventListener('resize', ()=>{
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+    mouse.radius = (canvas.width / 80) * (canvas.height / 80);
+    init();
+})
+window.addEventListener('mouseout', ()=>{
+    mouse.x = undefined;
+    mouse.y = undefined;
 })
 
 class Particles {
@@ -30,7 +40,7 @@ class Particles {
     }
     draw(){
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size*4, 0, this.x * this.y, false);
+        ctx.arc(this.x, this.y, this.size*2, 0, Math.PI * 4, false);
         ctx.fillStyle = 'greenyellow';
         ctx.fill();
     }
@@ -64,7 +74,7 @@ function init(){
     particles = [];
     let noOfParticles = (canvas.height*canvas.width)/9000;
 
-    for(let i=0;i<noOfParticles;i++){
+    for(let i=0;i<noOfParticles * 2;i++){
         let size = (Math.random() * 5) + 1;
         let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size*2);
         let y = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size*2);
