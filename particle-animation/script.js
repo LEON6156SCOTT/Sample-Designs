@@ -4,8 +4,6 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-
-
 let particles;
 
 let mouse = {
@@ -53,16 +51,16 @@ class Particles {
         let dx = mouse.x - this.x;
         let dy = mouse.y - this.y;
 
-        let distance = Math.sqrt(dx*dx + dy*dy);
+        let distance = Math.sqrt(dx*dx + dy*dy) + 50;
         if(distance < mouse.radius + this.size){
-            if(mouse.x < this.x && this.x > canvas.width - this.size * 10)
-                this.x +=10;
-            if(mouse.x > this.x && this.x > this.size * 10)
-                this.x -=10;
-            if(mouse.y > this.y && this.y > canvas.height - this.size * 10)
-                this.y +=10;
-            if(mouse.y > this.y && this.y > this.size * 10)
-                this.y -=10;
+            if (mouse.x < this.x && this.x < canvas.width - this.size * 10)
+                this.x += 10;
+            if (mouse.x > this.x && this.x > this.size * 10)
+                this.x -= 10;
+            if (mouse.y < this.y && this.y < canvas.height - this.size * 10)
+                this.y += 10;
+            if (mouse.y < this.y && this.y < this.size * 10)
+                this.y -= 10;
         }
         this.x += this.directionX;
         this.y +=this.directionY;
@@ -80,7 +78,7 @@ function init(){
         let y = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size*2);
         let directionX = (Math.random() * 5) - 2.5;
         let directionY = (Math.random() * 5) - 2.5;
-        let color = 'white';
+        let color = 'red';
 
         particles.push(new Particles(x, y, directionX, directionY, size, color));
     }
